@@ -1,0 +1,91 @@
+// Groovy DSL for Flutter Android app (build.gradle)
+import java.util.Properties
+import java.io.FileInputStream
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dev.flutter.flutter-gradle-plugin'
+}
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    println "✅ key.properties 文件已加载"
+    println "storeFile: ${keystoreProperties['storeFile']}"
+    println "keyAlias: ${keystoreProperties['keyAlias']}"
+} else {
+    println "❌ key.properties 文件不存在: ${keystorePropertiesFile.absolutePath}"
+}
+
+android {
+    namespace 'com.dsnbc.xmusic'
+    compileSdk 35
+    // ndkVersion '27.0.12077973' // Remove or comment out unless you specifically need this exact NDK
+
+    defaultConfig {
+        applicationId "com.dsnbc.xmusic"
+        minSdk 23
+        targetSdk 35
+        versionCode flutter.versionCode
+        versionName flutter.versionName
+    }
+
+    signingConfigs {
+        release {
+            if (keystoreProperties['storeFile'] != null) {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            } else {
+                println "❌ storeFile 为 null，请检查 key.properties 文件"
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    kotlinOptions {
+        jvmTarget = "21"
+    }
+
+    // applicationVariants.all { variant ->
+    //     variant.outputs.all { output ->
+    //         def apkName = "app-${variant.name}.apk"
+    //         output.outputFileName = apkName
+    //     }
+    // }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+                def apkName = "app-${variant.name}.apk"
+                output.outputFileName = apkName
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
+    // 添加友盟统计SDK
+    implementation 'com.umeng.umsdk:common:9.6.1'
+    implementation 'com.umeng.umsdk:asms:1.8.0'
+}
+
+flutter {
+    source '../..'
+}

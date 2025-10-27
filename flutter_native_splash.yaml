@@ -1,0 +1,12 @@
+flutter_native_splash:
+  color: "#F7F7F7" # 启动页背景色
+  image: assets/images/logo.png # 启动页中间的图片（建议 4x 像素密度的 png）
+  color_dark: "#F7F7F7" # 深色模式下的背景色
+  image_dark: assets/images/logo.png # 深色模式下的图片
+  android_12:
+    image: assets/images/logo.png
+    icon_background_color: "#F7F7F7"
+    color: "#F7F7F7"
+    image_dark: assets/images/logo.png
+    icon_background_color_dark: "#F7F7F7"
+    color_dark: "#F7F7F7"

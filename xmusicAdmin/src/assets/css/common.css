@@ -1,0 +1,1155 @@
+@import url('./magic.min.css');
+
+:root {
+  /*主色调*/
+  --default: #f7f7f7;
+  --success: rgba(70, 201, 58, 1);
+  --primary: rgba(26, 92, 255, 1);
+  --warn: rgba(255, 186, 0, 1);
+  --danger: rgba(255, 71, 87, 1);
+  --dark: rgba(30, 30, 30, 1);
+  /* 标准色 */
+  --red: #e54d42;
+  --orange: #f37b1d;
+  --yellow: #fbbd08;
+  --olive: #8dc63f;
+  --green: #39b54a;
+  --cyan: #1cbbb4;
+  --blue: #0081ff;
+  --purple: #6739b6;
+  --mauve: #9c26b0;
+  --pink: #e03997;
+  --brown: #a5673f;
+  --grey: #8799a3;
+  --black: #1C1C1C;
+  --darkGray: #666666;
+  --gray: #aaaaaa;
+  --ghostWhite: #f7f7f7;
+  --white: #FFFFFF;
+  --darkblack: #00020c;
+  /* 浅色 */
+  --redLight: #fadbd9;
+  --orangeLight: #fde6d2;
+  --yellowLight: #fef2ce;
+  --oliveLight: #e8f4d9;
+  --greenLight: #d7f0db;
+  --cyanLight: #d2f1f0;
+  --blueLight: #cce6ff;
+  --purpleLight: #e1d7f0;
+  --mauveLight: #ebd4ef;
+  --pinkLight: #f9d7ea;
+  --brownLight: #ede1d9;
+  --greyLight: #e7ebed;
+  /* 渐变色 */
+  --gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
+  --gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
+  --gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);
+  --gradualPurple: linear-gradient(45deg, #9000ff, #5e00ff);
+  --gradualPink: linear-gradient(45deg, #ec008c, #6739b6);
+  --gradualBlue: linear-gradient(45deg, #0081ff, #1cbbb4);
+  --customColor: linear-gradient(92deg, #5d38ff 40.54%, #0ec7f7 118.86%);
+  --customOColor: linear-gradient(92deg, #5d38ff 0%, #0ec8f700 17.86%);
+  ;
+  /* 阴影透明色 */
+  --ShadowSize: 6px 6px 8px;
+  --redShadow: rgba(204, 69, 59, 0.2);
+  --orangeShadow: rgba(217, 109, 26, 0.2);
+  --yellowShadow: rgba(224, 170, 7, 0.2);
+  --oliveShadow: rgba(124, 173, 55, 0.2);
+  --greenShadow: rgba(48, 156, 63, 0.2);
+  --cyanShadow: rgba(28, 187, 180, 0.2);
+  --blueShadow: rgba(0, 102, 204, 0.2);
+  --purpleShadow: rgba(88, 48, 156, 0.2);
+  --mauveShadow: rgba(133, 33, 150, 0.2);
+  --pinkShadow: rgba(199, 50, 134, 0.2);
+  --brownShadow: rgba(140, 88, 53, 0.2);
+  --greyShadow: rgba(114, 130, 138, 0.2);
+  --grayShadow: rgba(114, 130, 138, 0.2);
+  --blackShadow: rgba(26, 26, 26, 0.2);
+  --whiteShadow: rgba(255, 255, 255, 0.5);
+  background: var(--ghostWhite);
+  font-size: 12px;
+  color: var(--black);
+  overscroll-behavior-y: none;
+  touch-action: none;
+  font-family: PingFang SC, Helvetica Neue, Helvetica, sans-serif;
+  text-shadow: 0 0 20px rgb(0, 0, 0)(0, 0, 0);
+}
+
+/* 公共样式区域结束 */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+
+/* 适配IOS顶部底部区域开始=========================================================== */
+.iosBottomArea {
+  padding-bottom: constant(safe-area-inset-bottom) !important;
+  /*兼容 IOS<11.2*/
+  padding-bottom: env(safe-area-inset-bottom) !important;
+  /*兼容 IOS>11.2*/
+}
+
+.iosBottomPaddingArea {
+  padding-bottom: calc(100px + constant(safe-area-inset-bottom)) !important;
+  /*兼容 IOS<11.2*/
+  padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important;
+  /*兼容 IOS>11.2*/
+}
+
+.iosMarginBottomArea {
+  margin-bottom: constant(safe-area-inset-bottom) !important;
+  /*兼容 IOS<11.2*/
+  margin-bottom: env(safe-area-inset-bottom) !important;
+  /*兼容 IOS>11.2*/
+}
+
+/* 适配IOS顶部底部区域结束 */
+
+
+
+/* 字体颜色开始=========================================================== */
+.text-red {
+  color: var(--red);
+}
+
+.text-orange {
+  color: var(--orange);
+}
+
+.text-yellow {
+  color: var(--yellow);
+}
+
+.text-olive {
+  color: var(--olive);
+}
+
+.text-green {
+  color: var(--green);
+}
+
+.text-cyan {
+  color: var(--cyan);
+}
+
+.text-blue {
+  color: var(--blue);
+}
+
+.text-purple {
+  color: var(--purple);
+}
+
+.text-mauve {
+  color: var(--mauve);
+}
+
+.text-pink {
+  color: var(--pink);
+}
+
+.text-brown {
+  color: var(--brown);
+}
+
+.text-grey {
+  color: var(--grey);
+}
+
+.text-black {
+  color: var(--black);
+}
+
+.text-darkGray {
+  color: var(--darkGray);
+}
+
+.text-gray {
+  color: var(--gray);
+}
+
+.text-ghostWhite {
+  color: var(--ghostWhite);
+}
+
+.text-white {
+  color: var(--white);
+}
+
+.text-darkblack {
+  color: var(--darkblack);
+}
+
+/* 字体颜色结束=========================================================== */
+
+/* 背景颜色开始=========================================================== */
+.bg-red {
+  background: var(--red);
+}
+
+.bg-orange {
+  background: var(--orange);
+}
+
+.bg-yellow {
+  background: var(--yellow);
+}
+
+.bg-olive {
+  background: var(--olive);
+}
+
+.bg-green {
+  background: var(--green);
+}
+
+.bg-cyan {
+  background: var(--cyan);
+}
+
+.bg-blue {
+  background: var(--blue);
+}
+
+.bg-purple {
+  background: var(--purple);
+}
+
+.bg-mauve {
+  background: var(--mauve);
+}
+
+.bg-pink {
+  background: var(--pink);
+}
+
+.bg-brown {
+  background: var(--brown);
+}
+
+.bg-grey {
+  background: var(--grey);
+}
+
+.bg-black {
+  background: var(--black);
+}
+
+.bg-darkGray {
+  background: var(--darkGray);
+}
+
+.bg-gray {
+  background: var(--gray);
+}
+
+.bg-ghostWhite {
+  background: var(--ghostWhite);
+}
+
+.bg-white {
+  background: var(--white);
+}
+
+.bg-darkblack {
+  background: var(--darkblack);
+}
+
+.bg-gradualRed {
+  background: var(--gradualRed);
+}
+
+.bg-gradualOrange {
+  background: var(--gradualOrange);
+}
+
+.bg-gradualGreen {
+  background: var(--gradualGreen);
+}
+
+.bg-gradualPurple {
+  background: var(--gradualPurple);
+}
+
+.bg-gradualPink {
+  background: var(--gradualPink);
+}
+
+.bg-gradualBlue {
+  background: var(--gradualBlue);
+}
+
+.bg-o-red {
+  background: var(--redShadow);
+}
+
+.bg-o-orange {
+  background: var(--orangeShadow);
+}
+
+.bg-o-yellow {
+  background: var(--yellowShadow);
+}
+
+.bg-o-olive {
+  background: var(--oliveShadow);
+}
+
+.bg-o-green {
+  background: var(--greenShadow);
+}
+
+.bg-o-cyan {
+  background: var(--cyanShadow);
+}
+
+.bg-o-blue {
+  background: var(--blueShadow);
+}
+
+.bg-o-purple {
+  background: var(--purpleShadow);
+}
+
+.bg-o-mauve {
+  background: var(--mauveShadow);
+}
+
+.bg-o-pink {
+  background: var(--pinkShadow);
+}
+
+.bg-o-brown {
+  background: var(--brownShadow);
+}
+
+.bg-o-grey {
+  background: var(--greyShadow);
+}
+
+.bg-o-black {
+  background: var(--blackShadow);
+}
+
+.bg-o-gray {
+  background: var(--grayShadow);
+}
+
+.bg-o-ghostWhite {
+  background: var(--ghostWhite);
+}
+
+.bg-o-white {
+  background: var(--whiteShadow);
+}
+
+.bg-custom {
+  background: var(--customColor);
+}
+
+.bg-o-custom {
+  background: var(--customOColor);
+}
+
+/* 背景颜色结束=========================================================== */
+
+/* 边框颜色开始=========================================================== */
+.border-red {
+  border-color: var(--red) !important;
+}
+
+.border-orange {
+  border-color: var(--orange) !important;
+}
+
+.border-yellow {
+  border-color: var(--yellow) !important;
+}
+
+.border-olive {
+  border-color: var(--olive) !important;
+}
+
+.border-green {
+  border-color: var(--green) !important;
+}
+
+.border-cyan {
+  border-color: var(--cyan) !important;
+}
+
+.border-blue {
+  border-color: var(--blue) !important;
+}
+
+.border-purple {
+  border-color: var(--purple) !important;
+}
+
+.border-mauve {
+  border-color: var(--mauve) !important;
+}
+
+.border-pink {
+  border-color: var(--pink) !important;
+}
+
+.border-brown {
+  border-color: var(--brown) !important;
+}
+
+.border-grey {
+  border-color: var(--grey) !important;
+}
+
+.border-black {
+  border-color: var(--black) !important;
+}
+
+.border-darkGray {
+  border-color: var(--darkGray) !important;
+}
+
+.border-gray {
+  border-color: var(--gray) !important;
+}
+
+.border-ghostWhite {
+  border-color: var(--ghostWhite) !important;
+}
+
+.border-white {
+  border-color: var(--white) !important;
+}
+
+.border-darkblack {
+  border-color: var(--darkblack) !important;
+}
+
+.border-o-red {
+  border-color: var(--redShadow) !important;
+}
+
+.border-o-orange {
+  border-color: var(--orangeShadow) !important;
+}
+
+.border-o-yellow {
+  border-color: var(--yellowShadow) !important;
+}
+
+.border-o-olive {
+  border-color: var(--oliveShadow) !important;
+}
+
+.border-o-green {
+  border-color: var(--greenShadow) !important;
+}
+
+.border-o-cyan {
+  border-color: var(--cyanShadow) !important;
+}
+
+.border-o-blue {
+  border-color: var(--blueShadow) !important;
+}
+
+.border-o-purple {
+  border-color: var(--purpleShadow) !important;
+}
+
+.border-o-mauve {
+  border-color: var(--mauveShadow) !important;
+}
+
+.border-o-pink {
+  border-color: var(--pinkShadow) !important;
+}
+
+.border-o-brown {
+  border-color: var(--brownShadow) !important;
+}
+
+.border-o-grey {
+  border-color: var(--greyShadow) !important;
+}
+
+.border-o-black {
+  border-color: var(--blackShadow) !important;
+}
+
+.border-o-gray {
+  border-color: var(--grayShadow) !important;
+}
+
+.border-o-white {
+  border-color: var(--whiteShadow) !important;
+}
+
+/* 边框颜色结束=========================================================== */
+
+/* 阴影开始=========================================================== */
+.red-shadow {
+  box-shadow: var(--ShadowSize) var(--redShadow);
+}
+
+.orange-shadow {
+  border-color: var(--ShadowSize) var(--orangeShadow);
+}
+
+.yellow-shadow {
+  border-color: var(--ShadowSize) var(--yellowShadow);
+}
+
+.olive-shadow {
+  border-color: var(--ShadowSize) var(--oliveShadow);
+}
+
+.green-shadow {
+  border-color: var(--ShadowSize) var(--greenShadow);
+}
+
+.cyan-shadow {
+  border-color: var(--ShadowSize) var(--cyanShadow);
+}
+
+.blue-shadow {
+  border-color: var(--ShadowSize) var(--blueShadow);
+}
+
+.purple-shadow {
+  border-color: var(--ShadowSize) var(--purpleShadow);
+}
+
+.mauve-shadow {
+  border-color: var(--ShadowSize) var(--mauveShadow);
+}
+
+.pink-shadow {
+  border-color: var(--ShadowSize) var(--pinkShadow);
+}
+
+.brown-shadow {
+  border-color: var(--ShadowSize) var(--brownShadow);
+}
+
+.grey-shadow {
+  border-color: var(--ShadowSize) var(--greyShadow);
+}
+
+.black-shadow {
+  border-color: var(--ShadowSize) var(--blackShadow);
+}
+
+.gray-shadow {
+  border-color: var(--ShadowSize) var(--grayShadow);
+}
+
+.white-shadow {
+  border-color: var(--ShadowSize) var(--whiteShadow);
+}
+
+/* 阴影结束=========================================================== */
+
+/* flex布局开始=========================================================== */
+.flex {
+  display: flex;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.flex-flow {
+  flex-flow: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-direction {
+  flex-direction: column;
+}
+
+
+/* flex布局结束 */
+
+
+
+
+/* 定位布局开始=========================================================== */
+.rls {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
+}
+
+.fix {
+  position: fixed;
+}
+
+.fill {
+  width: 100%;
+  height: 100%;
+}
+
+.full {
+  width: 100vw;
+  height: 100vh;
+}
+
+.untouch {
+  overscroll-behavior-y: none;
+  touch-action: none;
+}
+
+.scroll-y {
+  overflow-y: auto;
+}
+
+.scroll-x {
+  overflow-x: auto;
+}
+
+.ani {
+  transition: .5s all ease-in;
+}
+
+.maxfill {
+  flex: 1 1 auto;
+}
+
+.minfill {
+  flex: 0 0 auto;
+}
+
+.wfill {
+  width: 100%;
+}
+
+.hfill {
+  height: 100%;
+}
+
+.cur {
+  cursor: pointer;
+}
+
+.cur:hover {
+  background: var(--yellowShadow);
+}
+
+/* 定位布局结束 */
+
+
+/* 间距样式开始=========================================================== */
+.padding-xss {
+  padding: 5px;
+}
+
+.padding-xs {
+  padding: 10px;
+}
+
+.padding-x {
+  padding: 20px;
+}
+
+.padding-xl {
+  padding: 30px;
+}
+
+.padding-xll {
+  padding: 40px;
+}
+
+.padding-xlll {
+  padding: 50px;
+}
+
+.padding-top-xs {
+  padding-top: 10px;
+}
+
+.padding-top-x {
+  padding-top: 20px;
+}
+
+.padding-top-xl {
+  padding-top: 30px;
+}
+
+.padding-right-xs {
+  padding-right: 10px;
+}
+
+.padding-right-x {
+  padding-right: 20px;
+}
+
+.padding-right-xl {
+  padding-right: 30px;
+}
+
+.padding-bottom-xs {
+  padding-bottom: 10px;
+}
+
+.padding-bottom-x {
+  padding-bottom: 20px;
+}
+
+.padding-bottom-xl {
+  padding-bottom: 30px;
+}
+
+.padding-left-xs {
+  padding-left: 10px;
+}
+
+.padding-left-x {
+  padding-left: 20px;
+}
+
+.padding-left-xl {
+  padding-left: 30px;
+}
+
+.padding-vertical-xs {
+  padding: 10px 0;
+}
+
+.padding-vertical-x {
+  padding: 20px 0;
+}
+
+.padding-vertical-xl {
+  padding: 30px 0;
+}
+
+.padding-vertical-xll {
+  padding: 40px 0;
+}
+
+.padding-vertical-xlll {
+  padding: 50px 0;
+}
+
+.padding-horizontal-xs {
+  padding: 0 10px;
+}
+
+.padding-horizontal-x {
+  padding: 0 20px;
+}
+
+.padding-horizontal-xl {
+  padding: 0 30px;
+}
+
+.padding-horizontal-xll {
+  padding: 0 40px;
+}
+
+.padding-horizontal-xlll {
+  padding: 0 50px;
+}
+
+/* ------------------------ */
+.margin-xss {
+  margin: 5px;
+}
+
+.margin-xs {
+  margin: 10px;
+}
+
+.margin-x {
+  margin: 20px;
+}
+
+.margin-xl {
+  margin: 30px;
+}
+
+.margin-top-xs {
+  margin-top: 10px;
+}
+
+.margin-top-x {
+  margin-top: 20px;
+}
+
+.margin-top-xl {
+  margin-top: 30px;
+}
+
+.margin-right-xs {
+  margin-right: 10px;
+}
+
+.margin-right-x {
+  margin-right: 20px;
+}
+
+.margin-right-xl {
+  margin-right: 30px;
+}
+
+.margin-bottom-xs {
+  margin-bottom: 10px;
+}
+
+.margin-bottom-x {
+  margin-bottom: 20px;
+}
+
+.margin-bottom-xl {
+  margin-bottom: 30px;
+}
+
+.margin-left-xs {
+  margin-left: 10px;
+}
+
+.margin-left-x {
+  margin-left: 20px;
+}
+
+.margin-left-xl {
+  margin-left: 30px;
+}
+
+.margin-vertical-xs {
+  margin: 10px 0;
+}
+
+.margin-vertical-x {
+  margin: 20px 0;
+}
+
+.margin-vertical-xl {
+  margin: 30px 0;
+}
+
+.margin-horizontal-xs {
+  margin: 0 10px;
+}
+
+.margin-horizontal-x {
+  margin: 0 20px;
+}
+
+.margin-horizontal-xl {
+  margin: 0 30px;
+}
+
+/* 间距样式结束 */
+
+
+/* 圆角样式开始 =========================================================== */
+.radius-xs {
+  border-radius: 10px;
+}
+
+.radius-x {
+  border-radius: 20px;
+}
+
+.radius-xl {
+  border-radius: 30px;
+}
+
+.radius-xll {
+  border-radius: 40px;
+}
+
+.radius-xlll {
+  border-radius: 50px;
+}
+
+.radius-max {
+  border-radius: 1000px;
+}
+
+/* 圆角样式结束 */
+
+
+/* 背景透明度和模糊度开始=========================================================== */
+.bg-white {
+  background: white;
+}
+
+.bg-white-xs {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.bg-white-x {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.bg-white-xl {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.bg-black {
+  background: #1c1c1c;
+}
+
+.bg-black-xs {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.bg-black-x {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.bg-black-xl {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.bg-blur-xsss {
+  backdrop-filter: saturate(300%) blur(2px);
+}
+
+.bg-blur-xss {
+  backdrop-filter: saturate(300%) blur(5px);
+}
+
+.bg-blur-xs {
+  backdrop-filter: saturate(300%) blur(10px);
+}
+
+.bg-blur-x {
+  backdrop-filter: saturate(400%) blur(20px);
+}
+
+.bg-blur-xl {
+  backdrop-filter: saturate(500%) blur(30px);
+}
+
+/* 背景透明度和模糊度结束 */
+
+
+/* 边框开始=========================================================== */
+.border-white-xs {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.border-white-x {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.border-white-xl {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.border-black-xs {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.border-black-x {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.border-black-xl {
+  border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+/* 边框结束 */
+
+/* animation 动画开始=========================================================== */
+.fadein {
+  animation: 2s fadeIn linear;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.colors {
+  animation: point-animation 4s infinite linear;
+}
+
+@keyframes point-animation {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    filter: hue-rotate(360deg);
+  }
+
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes anticlockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+/* animation 动画开始*/
+
+/* 字体大小开始=========================================================== */
+.font-xs {
+  font-size: 10px;
+}
+
+.font-x {
+  font-size: 14px;
+}
+
+.font-xl {
+  font-size: 18px;
+}
+
+.font-xll {
+  font-size: 22px;
+}
+
+.font-xlll {
+  font-size: 28px;
+}
+
+.font-xllll {
+  font-size: 38px;
+}
+
+/* 字体大小结束 */
+
+.diasshadownew {
+  -webkit-box-shadow: 20px 20px 20px rgba(29, 36, 56, .05), -20px -20px 20px hsla(0, 0%, 100%, .5), 6px 6px 6px rgba(29, 36, 56, .05), -6px -6px 6px hsla(0, 0%, 100%, .5);
+  box-shadow: 20px 20px 20px rgba(29, 36, 56, .05), -20px -20px 20px hsla(0, 0%, 100%, .5), 6px 6px 6px rgba(29, 36, 56, .05), -6px -6px 6px hsla(0, 0%, 100%, .5)
+}
+
+.line-x {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid #ededed;
+  border-bottom: 1px solid #FFFFFF;
+  overflow: hidden;
+}
+
+.line-y {
+  height: 100%;
+  width: 0;
+  border-left: 1px solid #ededed;
+  border-right: 1px solid #ffffff;
+  overflow: hidden;
+}
+
+.b {
+  font-weight: bold;
+}
+
+
+/* vue 内置动画开始 */
+
+/* vue 内置动画结束 */
+
+
+/* 浏览器滚动条样式开始 */
+/* 整个滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: calc(100% - 20px);
+  background-color: rgba(85, 85, 85, 0.5);
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+/* 滚动条上的箭头按钮 */
+::-webkit-scrollbar-button {
+  background-color: rgba(211, 210, 214, 0);
+  height: 0;
+}
+
+/* 滚动条上的滚动滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(75, 75, 75, 0.582);
+  border-radius: 5px;
+  /* 关键代码 */
+  background-image: -webkit-linear-gradient(45deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent);
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* 滚动条没有滑块的轨道部分 */
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+}
+
+/* 浏览器滚动条样式结束 */
+
+.icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
