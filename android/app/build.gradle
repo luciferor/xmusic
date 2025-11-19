@@ -67,6 +67,7 @@ android {
         jvmTarget = "17"
     }
 
+    // 注释掉自定义 APK 文件名，避免 Flutter 工具找不到生成的 APK
     // applicationVariants.all { variant ->
     //     variant.outputs.all { output ->
     //         def apkName = "app-${variant.name}.apk"
@@ -74,14 +75,14 @@ android {
     //     }
     // }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
-                def apkName = "app-${variant.name}.apk"
-                output.outputFileName = apkName
-            }
-        }
-    }
+    // android.applicationVariants.all { variant ->
+    //     variant.outputs.each { output ->
+    //         if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+    //             def apkName = "app-${variant.name}.apk"
+    //             output.outputFileName = apkName
+    //         }
+    //     }
+    // }
 }
 
 dependencies {
