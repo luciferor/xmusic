@@ -33,15 +33,13 @@ android {
     }
 
     signingConfigs {
-        release {
-            if (keystorePropertiesFile.exists() && keystoreProperties['storeFile'] != null) {
+        if (keystorePropertiesFile.exists() && keystoreProperties['storeFile'] != null) {
+            release {
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
                 println "✅ Using release signing config"
-            } else {
-                println "⚠️ Release signing config not available, using debug signing"
             }
         }
     }
@@ -53,8 +51,9 @@ android {
             // Use release signing if available, otherwise fall back to debug
             if (keystorePropertiesFile.exists() && keystoreProperties['storeFile'] != null) {
                 signingConfig signingConfigs.release
+                println "✅ Release build with release signing"
             } else {
-                signingConfig signingConfigs.debug
+                println "⚠️ Release build with debug signing (not suitable for production)"
             }
         }
     }

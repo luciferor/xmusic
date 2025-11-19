@@ -70,6 +70,15 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
+      - name: List build outputs
+        if: always()
+        run: |
+          echo "Checking build directory..."
+          ls -la build/app/outputs/ || echo "outputs directory not found"
+          ls -la build/app/outputs/flutter-apk/ || echo "flutter-apk directory not found"
+          ls -la build/app/outputs/apk/ || echo "apk directory not found"
+          find build -name "*.apk" || echo "No APK files found"
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
