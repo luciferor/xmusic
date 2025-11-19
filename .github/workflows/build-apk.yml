@@ -26,14 +26,23 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Fix flutter_dynamic_icon namespace issue
+      - name: Fix flutter_dynamic_icon issues
         run: |
-          PLUGIN_PATH="${HOME}/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/android/build.gradle"
-          if [ -f "$PLUGIN_PATH" ]; then
-            sed -i "s/apply plugin: 'com.android.library'/apply plugin: 'com.android.library'\nandroid.namespace = 'io.github.tastelessjolt.flutterdynamicicon'/" "$PLUGIN_PATH"
-            echo "✅ Fixed flutter_dynamic_icon namespace"
-          else
-            echo "⚠️ Plugin not found at expected path"
+          PLUGIN_DIR="${HOME}/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/android"
+
+          # 修复 namespace 问题
+          if [ -f "$PLUGIN_DIR/build.gradle" ]; then
+            sed -i "s/apply plugin: 'com.android.library'/apply plugin: 'com.android.library'\nandroid.namespace = 'io.github.tastelessjolt.flutterdynamicicon'/" "$PLUGIN_DIR/build.gradle"
+            echo "✅ Fixed namespace"
+          fi
+
+          # 修复 v1 embedding 问题 - 注释掉旧的 registerWith 方法
+          JAVA_FILE="$PLUGIN_DIR/src/main/java/io/github/tastelessjolt/flutterdynamicicon/FlutterDynamicIconPlugin.java"
+          if [ -f "$JAVA_FILE" ]; then
+            sed -i 's/public static void registerWith/\/\/ public static void registerWith/' "$JAVA_FILE"
+            sed -i 's/channel = new MethodChannel/\/\/ channel = new MethodChannel/' "$JAVA_FILE"
+            sed -i 's/channel.setMethodCallHandler/\/\/ channel.setMethodCallHandler/' "$JAVA_FILE"
+            echo "✅ Fixed v1 embedding"
           fi
 
       - name: Build APK
