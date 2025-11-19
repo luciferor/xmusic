@@ -67,8 +67,18 @@ jobs:
             echo "✅ Fixed v1 embedding"
           fi
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Clean build cache
+        run: |
+          flutter clean
+          cd android
+          ./gradlew clean --no-daemon
+          rm -rf .gradle
+          rm -rf build
+          echo "✅ Build cache cleaned"
+
+      - name: Build APK with verbose output
+        run: |
+          flutter build apk --release --verbose
 
       - name: List build outputs
         if: always()

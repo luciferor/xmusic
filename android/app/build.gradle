@@ -95,3 +95,6 @@ dependencies {
 flutter {
     source '../..'
 }
+
+// 禁用 Gradle 文件监视，修复 CI 环境 "Already watching path" 错误
+gradle.startParameter.setWatchFileSystemMode(org.gradle.api.internal.file.watch.WatchMode.DISABLED)
