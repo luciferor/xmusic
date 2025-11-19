@@ -21,13 +21,13 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace 'com.dsnbc.xmusic'
-    compileSdk 35
+    compileSdk 36
     // ndkVersion '27.0.12077973' // Remove or comment out unless you specifically need this exact NDK
 
     defaultConfig {
         applicationId "com.dsnbc.xmusic"
         minSdk 23
-        targetSdk 35
+        targetSdk 36
         versionCode flutter.versionCode
         versionName flutter.versionName
     }
