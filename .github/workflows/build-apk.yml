@@ -28,20 +28,25 @@ jobs:
 
       - name: Setup signing config
         run: |
-          # Create key.properties file from secrets
-          cat > android/key.properties << EOF
+          # Check if keystore secret exists
+          if [ -n "${{ secrets.KEYSTORE_BASE64 }}" ]; then
+            echo "✅ Setting up release signing configuration"
+            
+            # Create key.properties file from secrets
+            cat > android/key.properties << EOF
           storePassword=${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword=${{ secrets.KEY_PASSWORD }}
           keyAlias=${{ secrets.KEY_ALIAS }}
           storeFile=../upload-keystore.jks
           EOF
-
-          # Decode and save keystore file
-          if [ -n "${{ secrets.KEYSTORE_BASE64 }}" ]; then
+            
+            # Decode and save keystore file
             echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/upload-keystore.jks
-            echo "✅ Keystore file created"
+            echo "✅ Release signing configured"
           else
-            echo "⚠️ KEYSTORE_BASE64 secret not found, will use debug signing"
+            echo "⚠️ KEYSTORE_BASE64 secret not found"
+            echo "⚠️ Build will use debug signing (not suitable for production)"
+            echo "⚠️ See .github/SIGNING_SETUP.md for setup instructions"
           fi
 
       - name: Fix flutter_dynamic_icon issues
