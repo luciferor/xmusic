@@ -34,13 +34,14 @@ android {
 
     signingConfigs {
         release {
-            if (keystoreProperties['storeFile'] != null) {
+            if (keystorePropertiesFile.exists() && keystoreProperties['storeFile'] != null) {
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
+                println "✅ Using release signing config"
             } else {
-                println "❌ storeFile 为 null，请检查 key.properties 文件"
+                println "⚠️ Release signing config not available, using debug signing"
             }
         }
     }
@@ -49,7 +50,12 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
-            signingConfig signingConfigs.release
+            // Use release signing if available, otherwise fall back to debug
+            if (keystorePropertiesFile.exists() && keystoreProperties['storeFile'] != null) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
         }
     }
 
