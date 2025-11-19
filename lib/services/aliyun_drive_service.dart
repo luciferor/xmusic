@@ -14,7 +14,7 @@ class AliyunDriveService {
       'xxxxxxxxxxxxxxxxxxx'; // 替换为你的client_id
   static const String clientSecret =
       'xxxxxxxxxxxxxxxxxxx'; // 替换为你的client_secret
-  static const String redirectUri = 'xxxx'; // 自定义URI Scheme |xmusic://xxx/xxx
+  static const String redirectUri = 'xxxx'; // 自定义URI Scheme |xmusic://oauth/callback
 
   // 存储键名
   static const String _accessTokenKey = 'aliyun_access_token';
