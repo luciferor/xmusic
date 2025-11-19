@@ -36,12 +36,11 @@ jobs:
             echo "✅ Fixed namespace"
           fi
 
-          # 修复 v1 embedding 问题 - 注释掉旧的 registerWith 方法
+          # 修复 v1 embedding 问题 - 删除整个 registerWith 方法块
           JAVA_FILE="$PLUGIN_DIR/src/main/java/io/github/tastelessjolt/flutterdynamicicon/FlutterDynamicIconPlugin.java"
           if [ -f "$JAVA_FILE" ]; then
-            sed -i 's/public static void registerWith/\/\/ public static void registerWith/' "$JAVA_FILE"
-            sed -i 's/channel = new MethodChannel/\/\/ channel = new MethodChannel/' "$JAVA_FILE"
-            sed -i 's/channel.setMethodCallHandler/\/\/ channel.setMethodCallHandler/' "$JAVA_FILE"
+            # 使用 perl 删除从 "public static void registerWith" 到下一个 "}" 的整个方法
+            perl -i -0pe 's/public static void registerWith[^}]*\}//gs' "$JAVA_FILE"
             echo "✅ Fixed v1 embedding"
           fi
 
