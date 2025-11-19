@@ -26,6 +26,16 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Fix flutter_dynamic_icon namespace issue
+        run: |
+          PLUGIN_PATH="${HOME}/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/android/build.gradle"
+          if [ -f "$PLUGIN_PATH" ]; then
+            sed -i "s/apply plugin: 'com.android.library'/apply plugin: 'com.android.library'\nandroid.namespace = 'io.github.tastelessjolt.flutterdynamicicon'/" "$PLUGIN_PATH"
+            echo "✅ Fixed flutter_dynamic_icon namespace"
+          else
+            echo "⚠️ Plugin not found at expected path"
+          fi
+
       - name: Build APK
         run: flutter build apk --release
 
