@@ -70,9 +70,9 @@ jobs:
       - name: Clean build cache
         run: |
           flutter clean
-          cd android
-          ./gradlew clean --no-daemon
-          rm -rf .gradle
+          rm -rf android/.gradle
+          rm -rf android/build
+          rm -rf android/app/build
           rm -rf build
           echo "✅ Build cache cleaned"
 
