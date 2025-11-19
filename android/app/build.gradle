@@ -33,14 +33,13 @@ android {
     }
 
     signingConfigs {
-        release {
-            if (keystoreProperties['storeFile'] != null) {
+        if (keystorePropertiesFile.exists() && keystoreProperties['storeFile'] != null) {
+            release {
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
-            } else {
-                println "❌ storeFile 为 null，请检查 key.properties 文件"
+                println "✅ Using release signing config"
             }
         }
     }
@@ -49,7 +48,13 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
-            signingConfig signingConfigs.release
+            // Use release signing if available, otherwise fall back to debug
+            if (keystorePropertiesFile.exists() && keystoreProperties['storeFile'] != null) {
+                signingConfig signingConfigs.release
+                println "✅ Release build with release signing"
+            } else {
+                println "⚠️ Release build with debug signing (not suitable for production)"
+            }
         }
     }
 
@@ -62,6 +67,7 @@ android {
         jvmTarget = "17"
     }
 
+    // 注释掉自定义 APK 文件名，避免 Flutter 工具找不到生成的 APK
     // applicationVariants.all { variant ->
     //     variant.outputs.all { output ->
     //         def apkName = "app-${variant.name}.apk"
@@ -69,14 +75,14 @@ android {
     //     }
     // }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
-                def apkName = "app-${variant.name}.apk"
-                output.outputFileName = apkName
-            }
-        }
-    }
+    // android.applicationVariants.all { variant ->
+    //     variant.outputs.each { output ->
+    //         if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+    //             def apkName = "app-${variant.name}.apk"
+    //             output.outputFileName = apkName
+    //         }
+    //     }
+    // }
 }
 
 dependencies {

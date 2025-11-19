@@ -26,6 +26,29 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Setup signing config
+        run: |
+          # Check if keystore secret exists
+          if [ -n "${{ secrets.KEYSTORE_BASE64 }}" ]; then
+            echo "✅ Setting up release signing configuration"
+            
+            # Create key.properties file from secrets
+            cat > android/key.properties << EOF
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=../upload-keystore.jks
+          EOF
+            
+            # Decode and save keystore file
+            echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/upload-keystore.jks
+            echo "✅ Release signing configured"
+          else
+            echo "⚠️ KEYSTORE_BASE64 secret not found"
+            echo "⚠️ Build will use debug signing (not suitable for production)"
+            echo "⚠️ See .github/SIGNING_SETUP.md for setup instructions"
+          fi
+
       - name: Fix flutter_dynamic_icon issues
         run: |
           PLUGIN_DIR="${HOME}/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/android"
@@ -46,6 +69,15 @@ jobs:
 
       - name: Build APK
         run: flutter build apk --release
+
+      - name: List build outputs
+        if: always()
+        run: |
+          echo "Checking build directory..."
+          ls -la build/app/outputs/ || echo "outputs directory not found"
+          ls -la build/app/outputs/flutter-apk/ || echo "flutter-apk directory not found"
+          ls -la build/app/outputs/apk/ || echo "apk directory not found"
+          find build -name "*.apk" || echo "No APK files found"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
