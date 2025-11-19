@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -176,12 +177,29 @@ class _DynamiconState extends State<Dynamicon> {
   }
 
   Future<void> _init() async {
-    final isSupported = await FlutterDynamicIcon.supportsAlternateIcons;
-    final iconName = await FlutterDynamicIcon.getAlternateIconName();
-    setState(() {
-      support = isSupported;
-      currentIcon = iconName;
-    });
+    // 只在 iOS 上使用动态图标功能
+    if (Platform.isIOS) {
+      try {
+        final isSupported = await FlutterDynamicIcon.supportsAlternateIcons;
+        final iconName = await FlutterDynamicIcon.getAlternateIconName();
+        setState(() {
+          support = isSupported;
+          currentIcon = iconName;
+        });
+      } catch (e) {
+        print('动态图标初始化失败: $e');
+        setState(() {
+          support = false;
+          currentIcon = null;
+        });
+      }
+    } else {
+      // Android 和其他平台不支持
+      setState(() {
+        support = false;
+        currentIcon = null;
+      });
+    }
   }
 
   // 加载用户选择的背景图片
@@ -221,6 +239,18 @@ class _DynamiconState extends State<Dynamicon> {
   }
 
   Future<void> _setIcon(String? iconName) async {
+    // 只在 iOS 上支持动态图标
+    if (!Platform.isIOS) {
+      Fluttertoast.showToast(
+        msg: '当前平台不支持动态图标',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+      );
+      return;
+    }
+
     try {
       print('🔄 开始切换图标: ${iconName ?? "默认"}');
 

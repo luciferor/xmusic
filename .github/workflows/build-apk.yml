@@ -2,7 +2,7 @@ name: Build APK
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, dev]
   workflow_dispatch:
 
 jobs:
@@ -21,17 +21,34 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.24.0"
           channel: "stable"
 
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Fix flutter_dynamic_icon issues
+        run: |
+          PLUGIN_DIR="${HOME}/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/android"
+
+          # 修复 namespace 问题
+          if [ -f "$PLUGIN_DIR/build.gradle" ]; then
+            sed -i "s/apply plugin: 'com.android.library'/apply plugin: 'com.android.library'\nandroid.namespace = 'io.github.tastelessjolt.flutterdynamicicon'/" "$PLUGIN_DIR/build.gradle"
+            echo "✅ Fixed namespace"
+          fi
+
+          # 修复 v1 embedding 问题 - 删除整个 registerWith 方法块
+          JAVA_FILE="$PLUGIN_DIR/src/main/java/io/github/tastelessjolt/flutterdynamicicon/FlutterDynamicIconPlugin.java"
+          if [ -f "$JAVA_FILE" ]; then
+            # 使用 perl 删除从 "public static void registerWith" 到下一个 "}" 的整个方法
+            perl -i -0pe 's/public static void registerWith[^}]*\}//gs' "$JAVA_FILE"
+            echo "✅ Fixed v1 embedding"
+          fi
+
       - name: Build APK
         run: flutter build apk --release
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
