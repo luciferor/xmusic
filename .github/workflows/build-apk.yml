@@ -78,7 +78,12 @@ jobs:
 
       - name: Build APK with verbose output
         run: |
-          flutter build apk --release --verbose
+          set -e
+          flutter build apk --release --verbose 2>&1 | tee build.log || {
+            echo "❌ Build failed, showing last 100 lines of output:"
+            tail -n 100 build.log
+            exit 1
+          }
 
       - name: List build outputs
         if: always()
