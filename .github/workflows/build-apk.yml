@@ -67,8 +67,23 @@ jobs:
             echo "✅ Fixed v1 embedding"
           fi
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Clean build cache
+        run: |
+          flutter clean
+          rm -rf android/.gradle
+          rm -rf android/build
+          rm -rf android/app/build
+          rm -rf build
+          echo "✅ Build cache cleaned"
+
+      - name: Build APK with verbose output
+        run: |
+          set -e
+          flutter build apk --release --verbose 2>&1 | tee build.log || {
+            echo "❌ Build failed, showing last 100 lines of output:"
+            tail -n 100 build.log
+            exit 1
+          }
 
       - name: List build outputs
         if: always()
@@ -77,10 +92,15 @@ jobs:
           ls -la build/app/outputs/ || echo "outputs directory not found"
           ls -la build/app/outputs/flutter-apk/ || echo "flutter-apk directory not found"
           ls -la build/app/outputs/apk/ || echo "apk directory not found"
-          find build -name "*.apk" || echo "No APK files found"
+          ls -la build/app/outputs/apk/release/ || echo "apk/release directory not found"
+          echo "Searching for all APK files:"
+          find build -name "*.apk" -type f || echo "No APK files found"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/apk/release/app-release.apk
+            build/app/outputs/apk/release/*.apk
