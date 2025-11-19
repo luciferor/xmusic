@@ -43,12 +43,28 @@ class _AppinfoState extends State<Appinfo> {
   }
 
   Future<void> _init() async {
-    final isSupported = await FlutterDynamicIcon.supportsAlternateIcons;
-    final iconName = await FlutterDynamicIcon.getAlternateIconName();
-    setState(() {
-      support = isSupported;
-      currentIcon = iconName;
-    });
+    // 只在 iOS 上使用动态图标功能
+    if (Platform.isIOS) {
+      try {
+        final isSupported = await FlutterDynamicIcon.supportsAlternateIcons;
+        final iconName = await FlutterDynamicIcon.getAlternateIconName();
+        setState(() {
+          support = isSupported;
+          currentIcon = iconName;
+        });
+      } catch (e) {
+        print('动态图标初始化失败: $e');
+        setState(() {
+          support = false;
+          currentIcon = null;
+        });
+      }
+    } else {
+      setState(() {
+        support = false;
+        currentIcon = null;
+      });
+    }
   }
 
   Future<void> _initPackinfo() async {
