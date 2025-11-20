@@ -273,7 +273,6 @@ class _DynamiconState extends State<Dynamicon> {
       );
     } catch (e) {
       print('❌ 图标切换失败: $e');
-
       // 检查是否是权限相关错误
       String errorMessage = '切换失败';
       if (e.toString().contains('NSOSStatusErrorDomain') ||

@@ -76,27 +76,154 @@ jobs:
           rm -rf build
           echo "✅ Build cache cleaned"
 
+      - name: Pre-build checks
+        run: |
+          echo "=========================================="
+          echo "构建前环境检查"
+          echo "=========================================="
+
+          echo ""
+          echo "📋 Flutter 版本:"
+          flutter --version
+
+          echo ""
+          echo "📋 Java 版本:"
+          java -version
+
+          echo ""
+          echo "📋 Android SDK 路径:"
+          echo $ANDROID_SDK_ROOT
+
+          echo ""
+          echo "📋 检查 Android 配置:"
+          ls -la android/
+
+          echo ""
+          echo "📋 检查 build.gradle:"
+          cat android/app/build.gradle | grep -A 5 "buildTypes"
+
+          echo ""
+          echo "📋 检查签名配置:"
+          if [ -f "android/key.properties" ]; then
+            echo "✅ key.properties 存在"
+            cat android/key.properties | sed 's/Password=.*/Password=***/' 
+          else
+            echo "⚠️ key.properties 不存在，将使用 debug 签名"
+          fi
+
+          echo ""
+          echo "📋 Flutter doctor:"
+          flutter doctor -v
+
       - name: Build APK with verbose output
         run: |
           set -e
-          flutter build apk --release --verbose 2>&1 | tee build.log || {
-            echo "❌ Build failed, showing last 100 lines of output:"
+          echo "=========================================="
+          echo "开始构建 APK"
+          echo "=========================================="
+          echo "当前目录: $(pwd)"
+          echo "开始时间: $(date)"
+
+          # 执行构建
+          echo ""
+          echo "🏗️  执行 flutter build apk --release --verbose"
+          flutter build apk --release --verbose 2>&1 | tee build.log
+          BUILD_EXIT_CODE=${PIPESTATUS[0]}
+
+          echo ""
+          echo "=========================================="
+          echo "构建命令退出码: $BUILD_EXIT_CODE"
+          echo "结束时间: $(date)"
+          echo "=========================================="
+
+          # 立即检查 build 目录是否被创建
+          echo ""
+          echo "📁 检查 build 目录是否存在..."
+          if [ -d "build" ]; then
+            echo "✅ build 目录存在"
+            echo "build 目录大小: $(du -sh build 2>/dev/null || echo 'unknown')"
+          else
+            echo "❌ build 目录不存在！构建可能在早期阶段失败"
+            echo "显示构建日志的最后 100 行:"
             tail -n 100 build.log
             exit 1
-          }
+          fi
+
+          if [ $BUILD_EXIT_CODE -ne 0 ]; then
+            echo "❌ Build failed with exit code $BUILD_EXIT_CODE"
+            echo "Last 100 lines of output:"
+            tail -n 100 build.log
+            exit 1
+          fi
+
+          # 检查 APK 是否真的生成了
+          echo ""
+          echo "🔍 验证 APK 文件是否生成..."
+          if [ -f "build/app/outputs/flutter-apk/app-release.apk" ]; then
+            echo "✅ 找到 APK: build/app/outputs/flutter-apk/app-release.apk"
+            ls -lh build/app/outputs/flutter-apk/app-release.apk
+          elif [ -f "build/app/outputs/apk/release/app-release.apk" ]; then
+            echo "✅ 找到 APK: build/app/outputs/apk/release/app-release.apk"
+            ls -lh build/app/outputs/apk/release/app-release.apk
+          else
+            echo "❌ 构建命令成功但未找到 APK 文件！"
+            echo ""
+            echo "检查 build 目录内容:"
+            find build -type f | head -n 30
+            echo ""
+            echo "检查构建日志中的错误..."
+            grep -i "error\|failed\|exception" build.log | tail -n 30 || echo "未找到明显错误"
+            echo ""
+            echo "构建日志最后 50 行:"
+            tail -n 50 build.log
+            exit 1
+          fi
 
       - name: List build outputs
         if: always()
         run: |
-          echo "Checking build directory..."
-          ls -la build/app/outputs/ || echo "outputs directory not found"
-          ls -la build/app/outputs/flutter-apk/ || echo "flutter-apk directory not found"
-          ls -la build/app/outputs/apk/ || echo "apk directory not found"
-          ls -la build/app/outputs/apk/release/ || echo "apk/release directory not found"
-          echo "Searching for all APK files:"
-          find build -name "*.apk" -type f || echo "No APK files found"
+          echo "=========================================="
+          echo "检查构建目录结构"
+          echo "=========================================="
+
+          echo ""
+          echo "📁 build/ 目录:"
+          ls -la build/ 2>/dev/null || echo "❌ build/ 目录不存在"
+
+          echo ""
+          echo "📁 build/app/ 目录:"
+          ls -la build/app/ 2>/dev/null || echo "❌ build/app/ 目录不存在"
+
+          echo ""
+          echo "📁 build/app/outputs/ 目录:"
+          ls -la build/app/outputs/ 2>/dev/null || echo "❌ build/app/outputs/ 目录不存在"
+
+          echo ""
+          echo "📁 build/app/outputs/flutter-apk/ 目录:"
+          ls -la build/app/outputs/flutter-apk/ 2>/dev/null || echo "❌ build/app/outputs/flutter-apk/ 目录不存在"
+
+          echo ""
+          echo "📁 build/app/outputs/apk/release/ 目录:"
+          ls -la build/app/outputs/apk/release/ 2>/dev/null || echo "❌ build/app/outputs/apk/release/ 目录不存在"
+
+          echo ""
+          echo "🔍 搜索所有 APK 文件:"
+          find build -name "*.apk" -type f -exec ls -lh {} \; 2>/dev/null || echo "❌ 未找到任何 APK 文件"
+
+          echo ""
+          echo "📋 完整 build 目录树:"
+          find build -type f 2>/dev/null | head -n 50 || echo "build 目录为空"
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+          retention-days: 7
 
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-release

@@ -39,38 +39,7 @@ docker run --rm \
     -v "$(pwd):/app" \
     -w /app \
     flutter-builder:latest \
-    bash -c "
-        set -e
-        echo '📥 安装依赖...'
-        flutter pub get
-        
-        echo '🧹 清理构建缓存...'
-        flutter clean
-        rm -rf android/.gradle
-        rm -rf android/build
-        rm -rf android/app/build
-        
-        echo '🔧 修复插件问题...'
-        PLUGIN_DIR=\"\${HOME}/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/android\"
-        if [ -d \"\$PLUGIN_DIR\" ]; then
-            if [ -f \"\$PLUGIN_DIR/build.gradle\" ]; then
-                sed -i \"s/apply plugin: 'com.android.library'/apply plugin: 'com.android.library'\nandroid.namespace = 'io.github.tastelessjolt.flutterdynamicicon'/\" \"\$PLUGIN_DIR/build.gradle\"
-                echo '✅ 修复 namespace'
-            fi
-            
-            JAVA_FILE=\"\$PLUGIN_DIR/src/main/java/io/github/tastelessjolt/flutterdynamicicon/FlutterDynamicIconPlugin.java\"
-            if [ -f \"\$JAVA_FILE\" ]; then
-                perl -i -0pe 's/public static void registerWith[^}]*\}//gs' \"\$JAVA_FILE\"
-                echo '✅ 修复 v1 embedding'
-            fi
-        fi
-        
-        echo '🏗️  构建 APK...'
-        flutter build apk --release --verbose
-        
-        echo '📋 构建产物列表：'
-        find build -name '*.apk' -type f
-    "
+    bash /app/docker-build-script.sh
 
 # 检查构建结果
 APK_PATH="build/app/outputs/flutter-apk/app-release.apk"

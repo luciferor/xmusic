@@ -1,0 +1,281 @@
+[  +65 ms] executing: uname -m
+[   +4 ms] Exit code 0 from: uname -m
+[        ] x86_64
+[   +9 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[   +1 ms] executing: [/opt/flutter/] git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[   +4 ms] Exit code 0 from: git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[        ] 2025-11-18 09:27:21 -0500
+[  +13 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[   +2 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +35 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[   +2 ms] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[  +94 ms] executing: [/app/] /opt/flutter/bin/cache/dart-sdk/bin/dart pub --suppress-analytics --directory . get --example
+Resolving dependencies...
+Downloading packages...
+  _fe_analyzer_shared 85.0.0 (92.0.0 available)
+  analyzer 7.7.1 (9.0.0 available)
+  audio_waveforms 1.3.0 (2.0.0 available)
+  bloc 8.1.4 (9.1.0 available)
+  characters 1.4.0 (1.4.1 available)
+  dartdoc 8.3.4 (9.0.0 available)
+  device_info_plus 11.5.0 (12.2.0 available)
+  flutter_bloc 8.1.6 (9.1.1 available)
+  fluttertoast 8.2.14 (9.0.0 available)
+  liquid_glass_renderer 0.1.1-dev.26 (0.2.0-dev.4 available)
+  material_color_utilities 0.11.1 (0.13.0 available)
+  package_info_plus 8.3.1 (9.0.0 available)
+  test_api 0.7.7 (0.7.8 available)
+Got dependencies!
+13 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+[ +794 ms] Found plugin watch_connectivity at /root/.pub-cache/hosted/pub.dev/watch_connectivity-0.2.4/
+[   +9 ms] Found plugin umeng_common_sdk at /root/.pub-cache/hosted/pub.dev/umeng_common_sdk-1.3.0/
+[   +9 ms] Found plugin shared_preferences at /root/.pub-cache/hosted/pub.dev/shared_preferences-2.5.3/
+[   +3 ms] Found plugin shared_preferences_windows at /root/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.4.1/
+[   +9 ms] Found plugin path_provider_windows at /root/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
+[  +11 ms] Found plugin shared_preferences_web at /root/.pub-cache/hosted/pub.dev/shared_preferences_web-2.4.3/
+[   +7 ms] Found plugin shared_preferences_linux at /root/.pub-cache/hosted/pub.dev/shared_preferences_linux-2.4.1/
+[   +2 ms] Found plugin path_provider_linux at /root/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+[   +3 ms] Found plugin shared_preferences_foundation at /root/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.6/
+[   +3 ms] Found plugin shared_preferences_android at /root/.pub-cache/hosted/pub.dev/shared_preferences_android-2.4.16/
+[  +13 ms] Found plugin pretty_animated_text at /root/.pub-cache/hosted/pub.dev/pretty_animated_text-2.0.0/
+[   +2 ms] Found plugin path_provider at /root/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
+[   +2 ms] Found plugin path_provider_foundation at /root/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.4/
+[   +2 ms] Found plugin path_provider_android at /root/.pub-cache/hosted/pub.dev/path_provider_android-2.2.21/
+[   +6 ms] Found plugin package_info_plus at /root/.pub-cache/hosted/pub.dev/package_info_plus-8.3.1/
+[  +41 ms] Found plugin just_waveform at /root/.pub-cache/hosted/pub.dev/just_waveform-0.0.7/
+[   +1 ms] Found plugin just_audio_windows at /root/.pub-cache/hosted/pub.dev/just_audio_windows-0.2.2/
+[   +2 ms] Found plugin just_audio at /root/.pub-cache/hosted/pub.dev/just_audio-0.10.5/
+[   +4 ms] Found plugin just_audio_web at /root/.pub-cache/hosted/pub.dev/just_audio_web-0.4.16/
+[   +2 ms] Found plugin audio_session at /root/.pub-cache/hosted/pub.dev/audio_session-0.2.2/
+[   +1 ms] Found plugin image_picker at /root/.pub-cache/hosted/pub.dev/image_picker-1.2.1/
+[   +1 ms] Found plugin image_picker_windows at /root/.pub-cache/hosted/pub.dev/image_picker_windows-0.2.2/
+[   +3 ms] Found plugin file_selector_windows at /root/.pub-cache/hosted/pub.dev/file_selector_windows-0.9.3+5/
+[   +2 ms] Found plugin image_picker_macos at /root/.pub-cache/hosted/pub.dev/image_picker_macos-0.2.2+1/
+[   +1 ms] Found plugin file_selector_macos at /root/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.4+6/
+[   +1 ms] Found plugin image_picker_linux at /root/.pub-cache/hosted/pub.dev/image_picker_linux-0.2.2/
+[   +1 ms] Found plugin file_selector_linux at /root/.pub-cache/hosted/pub.dev/file_selector_linux-0.9.3+3/
+[   +1 ms] Found plugin image_picker_ios at /root/.pub-cache/hosted/pub.dev/image_picker_ios-0.8.13+2/
+[   +1 ms] Found plugin image_picker_for_web at /root/.pub-cache/hosted/pub.dev/image_picker_for_web-3.1.1/
+[   +2 ms] Found plugin image_picker_android at /root/.pub-cache/hosted/pub.dev/image_picker_android-0.8.13+9/
+[   +1 ms] Found plugin flutter_plugin_android_lifecycle at /root/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.32/
+[   +7 ms] Found plugin fluttertoast at /root/.pub-cache/hosted/pub.dev/fluttertoast-8.2.14/
+[   +1 ms] Found plugin flutter_web_auth_2 at /root/.pub-cache/hosted/pub.dev/flutter_web_auth_2-4.1.0/
+[   +1 ms] Found plugin window_to_front at /root/.pub-cache/hosted/pub.dev/window_to_front-0.0.3/
+[   +1 ms] Found plugin url_launcher at /root/.pub-cache/hosted/pub.dev/url_launcher-6.3.2/
+[   +1 ms] Found plugin url_launcher_windows at /root/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.5/
+[   +2 ms] Found plugin url_launcher_web at /root/.pub-cache/hosted/pub.dev/url_launcher_web-2.4.1/
+[   +2 ms] Found plugin url_launcher_macos at /root/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.5/
+[   +1 ms] Found plugin url_launcher_linux at /root/.pub-cache/hosted/pub.dev/url_launcher_linux-3.2.2/
+[   +1 ms] Found plugin url_launcher_ios at /root/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.6/
+[   +1 ms] Found plugin url_launcher_android at /root/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.27/
+[   +1 ms] Found plugin desktop_webview_window at /root/.pub-cache/hosted/pub.dev/desktop_webview_window-0.2.3/
+[   +6 ms] Found plugin flutter_native_splash at /root/.pub-cache/hosted/pub.dev/flutter_native_splash-2.4.7/
+[   +7 ms] Found plugin flutter_keyboard_visibility at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility-6.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_windows at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_windows-1.0.0/
+[   +2 ms] Found plugin flutter_keyboard_visibility_web at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_web-2.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_macos at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_macos-1.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_linux at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_linux-1.0.0/
+[   +1 ms] Found plugin flutter_dynamic_icon at /root/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/
+[   +4 ms] Found plugin file_picker at /root/.pub-cache/hosted/pub.dev/file_picker-10.3.6/
+[   +3 ms] Found plugin device_info_plus at /root/.pub-cache/hosted/pub.dev/device_info_plus-11.5.0/
+[  +15 ms] Found plugin car_play at /root/.pub-cache/hosted/pub.dev/car_play-1.0.5/
+[   +4 ms] Found plugin sqflite at /root/.pub-cache/hosted/pub.dev/sqflite-2.4.2/
+[   +2 ms] Found plugin sqflite_darwin at /root/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.2/
+[   +1 ms] Found plugin sqflite_android at /root/.pub-cache/hosted/pub.dev/sqflite_android-2.4.2+2/
+[   +3 ms] Found plugin background_downloader at /root/.pub-cache/hosted/pub.dev/background_downloader-9.3.0/
+[   +2 ms] Found plugin audio_waveforms at /root/.pub-cache/hosted/pub.dev/audio_waveforms-1.3.0/
+[   +1 ms] Found plugin audio_service at /root/.pub-cache/hosted/pub.dev/audio_service-0.18.18/
+[   +2 ms] Found plugin audio_service_web at /root/.pub-cache/hosted/pub.dev/audio_service_web-0.1.4/
+[ +228 ms] Found plugin watch_connectivity at /root/.pub-cache/hosted/pub.dev/watch_connectivity-0.2.4/
+[   +1 ms] Found plugin umeng_common_sdk at /root/.pub-cache/hosted/pub.dev/umeng_common_sdk-1.3.0/
+[   +2 ms] Found plugin shared_preferences at /root/.pub-cache/hosted/pub.dev/shared_preferences-2.5.3/
+[   +1 ms] Found plugin shared_preferences_windows at /root/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.4.1/
+[   +2 ms] Found plugin path_provider_windows at /root/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
+[   +3 ms] Found plugin shared_preferences_web at /root/.pub-cache/hosted/pub.dev/shared_preferences_web-2.4.3/
+[   +2 ms] Found plugin shared_preferences_linux at /root/.pub-cache/hosted/pub.dev/shared_preferences_linux-2.4.1/
+[   +1 ms] Found plugin path_provider_linux at /root/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+[   +2 ms] Found plugin shared_preferences_foundation at /root/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.6/
+[   +1 ms] Found plugin shared_preferences_android at /root/.pub-cache/hosted/pub.dev/shared_preferences_android-2.4.16/
+[   +3 ms] Found plugin pretty_animated_text at /root/.pub-cache/hosted/pub.dev/pretty_animated_text-2.0.0/
+[   +1 ms] Found plugin path_provider at /root/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
+[   +1 ms] Found plugin path_provider_foundation at /root/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.4/
+[   +1 ms] Found plugin path_provider_android at /root/.pub-cache/hosted/pub.dev/path_provider_android-2.2.21/
+[   +4 ms] Found plugin package_info_plus at /root/.pub-cache/hosted/pub.dev/package_info_plus-8.3.1/
+[  +20 ms] Found plugin just_waveform at /root/.pub-cache/hosted/pub.dev/just_waveform-0.0.7/
+[   +1 ms] Found plugin just_audio_windows at /root/.pub-cache/hosted/pub.dev/just_audio_windows-0.2.2/
+[   +1 ms] Found plugin just_audio at /root/.pub-cache/hosted/pub.dev/just_audio-0.10.5/
+[   +4 ms] Found plugin just_audio_web at /root/.pub-cache/hosted/pub.dev/just_audio_web-0.4.16/
+[   +2 ms] Found plugin audio_session at /root/.pub-cache/hosted/pub.dev/audio_session-0.2.2/
+[   +1 ms] Found plugin image_picker at /root/.pub-cache/hosted/pub.dev/image_picker-1.2.1/
+[   +1 ms] Found plugin image_picker_windows at /root/.pub-cache/hosted/pub.dev/image_picker_windows-0.2.2/
+[   +3 ms] Found plugin file_selector_windows at /root/.pub-cache/hosted/pub.dev/file_selector_windows-0.9.3+5/
+[   +2 ms] Found plugin image_picker_macos at /root/.pub-cache/hosted/pub.dev/image_picker_macos-0.2.2+1/
+[   +1 ms] Found plugin file_selector_macos at /root/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.4+6/
+[   +1 ms] Found plugin image_picker_linux at /root/.pub-cache/hosted/pub.dev/image_picker_linux-0.2.2/
+[   +1 ms] Found plugin file_selector_linux at /root/.pub-cache/hosted/pub.dev/file_selector_linux-0.9.3+3/
+[   +1 ms] Found plugin image_picker_ios at /root/.pub-cache/hosted/pub.dev/image_picker_ios-0.8.13+2/
+[   +1 ms] Found plugin image_picker_for_web at /root/.pub-cache/hosted/pub.dev/image_picker_for_web-3.1.1/
+[   +2 ms] Found plugin image_picker_android at /root/.pub-cache/hosted/pub.dev/image_picker_android-0.8.13+9/
+[   +1 ms] Found plugin flutter_plugin_android_lifecycle at /root/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.32/
+[   +6 ms] Found plugin fluttertoast at /root/.pub-cache/hosted/pub.dev/fluttertoast-8.2.14/
+[   +1 ms] Found plugin flutter_web_auth_2 at /root/.pub-cache/hosted/pub.dev/flutter_web_auth_2-4.1.0/
+[   +1 ms] Found plugin window_to_front at /root/.pub-cache/hosted/pub.dev/window_to_front-0.0.3/
+[        ] Found plugin url_launcher at /root/.pub-cache/hosted/pub.dev/url_launcher-6.3.2/
+[   +1 ms] Found plugin url_launcher_windows at /root/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.5/
+[   +2 ms] Found plugin url_launcher_web at /root/.pub-cache/hosted/pub.dev/url_launcher_web-2.4.1/
+[   +1 ms] Found plugin url_launcher_macos at /root/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.5/
+[   +1 ms] Found plugin url_launcher_linux at /root/.pub-cache/hosted/pub.dev/url_launcher_linux-3.2.2/
+[   +1 ms] Found plugin url_launcher_ios at /root/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.6/
+[   +1 ms] Found plugin url_launcher_android at /root/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.27/
+[   +1 ms] Found plugin desktop_webview_window at /root/.pub-cache/hosted/pub.dev/desktop_webview_window-0.2.3/
+[   +5 ms] Found plugin flutter_native_splash at /root/.pub-cache/hosted/pub.dev/flutter_native_splash-2.4.7/
+[   +4 ms] Found plugin flutter_keyboard_visibility at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility-6.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_windows at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_windows-1.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_web at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_web-2.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_macos at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_macos-1.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_linux at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_linux-1.0.0/
+[   +1 ms] Found plugin flutter_dynamic_icon at /root/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/
+[   +2 ms] Found plugin file_picker at /root/.pub-cache/hosted/pub.dev/file_picker-10.3.6/
+[   +2 ms] Found plugin device_info_plus at /root/.pub-cache/hosted/pub.dev/device_info_plus-11.5.0/
+[   +9 ms] Found plugin car_play at /root/.pub-cache/hosted/pub.dev/car_play-1.0.5/
+[   +3 ms] Found plugin sqflite at /root/.pub-cache/hosted/pub.dev/sqflite-2.4.2/
+[   +2 ms] Found plugin sqflite_darwin at /root/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.2/
+[   +1 ms] Found plugin sqflite_android at /root/.pub-cache/hosted/pub.dev/sqflite_android-2.4.2+2/
+[   +2 ms] Found plugin background_downloader at /root/.pub-cache/hosted/pub.dev/background_downloader-9.3.0/
+[   +1 ms] Found plugin audio_waveforms at /root/.pub-cache/hosted/pub.dev/audio_waveforms-1.3.0/
+[        ] Found plugin audio_service at /root/.pub-cache/hosted/pub.dev/audio_service-0.18.18/
+[   +1 ms] Found plugin audio_service_web at /root/.pub-cache/hosted/pub.dev/audio_service_web-0.1.4/
+[  +51 ms] Found plugin watch_connectivity at /root/.pub-cache/hosted/pub.dev/watch_connectivity-0.2.4/
+[   +1 ms] Found plugin umeng_common_sdk at /root/.pub-cache/hosted/pub.dev/umeng_common_sdk-1.3.0/
+[   +2 ms] Found plugin shared_preferences at /root/.pub-cache/hosted/pub.dev/shared_preferences-2.5.3/
+[        ] Found plugin shared_preferences_windows at /root/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.4.1/
+[   +1 ms] Found plugin path_provider_windows at /root/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
+[   +2 ms] Found plugin shared_preferences_web at /root/.pub-cache/hosted/pub.dev/shared_preferences_web-2.4.3/
+[   +1 ms] Found plugin shared_preferences_linux at /root/.pub-cache/hosted/pub.dev/shared_preferences_linux-2.4.1/
+[        ] Found plugin path_provider_linux at /root/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+[   +1 ms] Found plugin shared_preferences_foundation at /root/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.6/
+[        ] Found plugin shared_preferences_android at /root/.pub-cache/hosted/pub.dev/shared_preferences_android-2.4.16/
+[   +2 ms] Found plugin pretty_animated_text at /root/.pub-cache/hosted/pub.dev/pretty_animated_text-2.0.0/
+[   +1 ms] Found plugin path_provider at /root/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
+[        ] Found plugin path_provider_foundation at /root/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.4/
+[        ] Found plugin path_provider_android at /root/.pub-cache/hosted/pub.dev/path_provider_android-2.2.21/
+[   +2 ms] Found plugin package_info_plus at /root/.pub-cache/hosted/pub.dev/package_info_plus-8.3.1/
+[  +13 ms] Found plugin just_waveform at /root/.pub-cache/hosted/pub.dev/just_waveform-0.0.7/
+[        ] Found plugin just_audio_windows at /root/.pub-cache/hosted/pub.dev/just_audio_windows-0.2.2/
+[        ] Found plugin just_audio at /root/.pub-cache/hosted/pub.dev/just_audio-0.10.5/
+[   +2 ms] Found plugin just_audio_web at /root/.pub-cache/hosted/pub.dev/just_audio_web-0.4.16/
+[   +1 ms] Found plugin audio_session at /root/.pub-cache/hosted/pub.dev/audio_session-0.2.2/
+[   +1 ms] Found plugin image_picker at /root/.pub-cache/hosted/pub.dev/image_picker-1.2.1/
+[        ] Found plugin image_picker_windows at /root/.pub-cache/hosted/pub.dev/image_picker_windows-0.2.2/
+[   +1 ms] Found plugin file_selector_windows at /root/.pub-cache/hosted/pub.dev/file_selector_windows-0.9.3+5/
+[   +1 ms] Found plugin image_picker_macos at /root/.pub-cache/hosted/pub.dev/image_picker_macos-0.2.2+1/
+[        ] Found plugin file_selector_macos at /root/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.4+6/
+[        ] Found plugin image_picker_linux at /root/.pub-cache/hosted/pub.dev/image_picker_linux-0.2.2/
+[        ] Found plugin file_selector_linux at /root/.pub-cache/hosted/pub.dev/file_selector_linux-0.9.3+3/
+[   +1 ms] Found plugin image_picker_ios at /root/.pub-cache/hosted/pub.dev/image_picker_ios-0.8.13+2/
+[   +1 ms] Found plugin image_picker_for_web at /root/.pub-cache/hosted/pub.dev/image_picker_for_web-3.1.1/
+[   +1 ms] Found plugin image_picker_android at /root/.pub-cache/hosted/pub.dev/image_picker_android-0.8.13+9/
+[   +1 ms] Found plugin flutter_plugin_android_lifecycle at /root/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.32/
+[   +5 ms] Found plugin fluttertoast at /root/.pub-cache/hosted/pub.dev/fluttertoast-8.2.14/
+[   +1 ms] Found plugin flutter_web_auth_2 at /root/.pub-cache/hosted/pub.dev/flutter_web_auth_2-4.1.0/
+[   +1 ms] Found plugin window_to_front at /root/.pub-cache/hosted/pub.dev/window_to_front-0.0.3/
+[   +1 ms] Found plugin url_launcher at /root/.pub-cache/hosted/pub.dev/url_launcher-6.3.2/
+[        ] Found plugin url_launcher_windows at /root/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.5/
+[   +1 ms] Found plugin url_launcher_web at /root/.pub-cache/hosted/pub.dev/url_launcher_web-2.4.1/
+[   +1 ms] Found plugin url_launcher_macos at /root/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.5/
+[   +1 ms] Found plugin url_launcher_linux at /root/.pub-cache/hosted/pub.dev/url_launcher_linux-3.2.2/
+[   +1 ms] Found plugin url_launcher_ios at /root/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.6/
+[        ] Found plugin url_launcher_android at /root/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.27/
+[   +1 ms] Found plugin desktop_webview_window at /root/.pub-cache/hosted/pub.dev/desktop_webview_window-0.2.3/
+[   +5 ms] Found plugin flutter_native_splash at /root/.pub-cache/hosted/pub.dev/flutter_native_splash-2.4.7/
+[   +4 ms] Found plugin flutter_keyboard_visibility at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility-6.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_windows at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_windows-1.0.0/
+[   +2 ms] Found plugin flutter_keyboard_visibility_web at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_web-2.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_macos at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_macos-1.0.0/
+[   +1 ms] Found plugin flutter_keyboard_visibility_linux at /root/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_linux-1.0.0/
+[        ] Found plugin flutter_dynamic_icon at /root/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/
+[   +2 ms] Found plugin file_picker at /root/.pub-cache/hosted/pub.dev/file_picker-10.3.6/
+[   +2 ms] Found plugin device_info_plus at /root/.pub-cache/hosted/pub.dev/device_info_plus-11.5.0/
+[  +10 ms] Found plugin car_play at /root/.pub-cache/hosted/pub.dev/car_play-1.0.5/
+[   +2 ms] Found plugin sqflite at /root/.pub-cache/hosted/pub.dev/sqflite-2.4.2/
+[   +1 ms] Found plugin sqflite_darwin at /root/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.2/
+[        ] Found plugin sqflite_android at /root/.pub-cache/hosted/pub.dev/sqflite_android-2.4.2+2/
+[   +2 ms] Found plugin background_downloader at /root/.pub-cache/hosted/pub.dev/background_downloader-9.3.0/
+[   +1 ms] Found plugin audio_waveforms at /root/.pub-cache/hosted/pub.dev/audio_waveforms-1.3.0/
+[        ] Found plugin audio_service at /root/.pub-cache/hosted/pub.dev/audio_service-0.18.18/
+[   +1 ms] Found plugin audio_service_web at /root/.pub-cache/hosted/pub.dev/audio_service_web-0.1.4/
+[  +14 ms] Generating /app/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+[  +10 ms] Skipping generating GeneratedPluginRegistrant.java because it is up-to-date.
+[   +7 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[   +5 ms] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[   +5 ms] Skipping generating generated_plugins.cmake because it is up-to-date.
+[   +5 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[   +4 ms] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[   +4 ms] Skipping generating generated_plugins.cmake because it is up-to-date.
+[   +5 ms] Skipping generating GeneratedPluginRegistrant.h because it is up-to-date.
+[   +5 ms] Skipping generating GeneratedPluginRegistrant.m because it is up-to-date.
+[   +4 ms] Skipping generating GeneratedPluginRegistrant.swift because it is up-to-date.
+[  +80 ms] Top-level Gradle build file not found, skipping migration of task "clean".
+[   +1 ms] Android Studio version could not be detected, skipping Gradle-Java version compatibility check.
+[  +36 ms] CMake project not found, skipping support Android 15 16k page size migration.
+[  +13 ms] Using gradle from /app/android/gradlew.
+[  +27 ms] LocalFile: '/app/android/build.gradle.kts' doesn't provide an AGP version. Checking settings.
+[   +5 ms] LocalFile: '/app/android/settings.gradle.kts' provides AGP version: 8.9.1
+[   +1 ms] Running Gradle task 'assembleRelease'...
+[   +1 ms] executing: [/app/android/] /app/android/gradlew --full-stacktrace --info -Pverbose=true -Ptarget-platform=android-arm,android-arm64,android-x64 -Ptarget=lib/main.dart -Pbase-application-name=android.app.Application -Pdart-defines=RkxVVFRFUl9WRVJTSU9OPTMuMzguMg==,RkxVVFRFUl9DSEFOTkVMPXN0YWJsZQ==,RkxVVFRFUl9HSVRfVVJMPWh0dHBzOi8vZ2l0aHViLmNvbS9mbHV0dGVyL2ZsdXR0ZXIuZ2l0,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049ZjVhODUzN2Y5MA==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049YjU5OTBlNWNjYw==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My4xMC4w -Pdart-obfuscation=false -Ptrack-widget-creation=true -Ptree-shake-icons=true assembleRelease
+[ +202 ms] Downloading https://services.gradle.org/distributions/gradle-8.11.1-all.zip

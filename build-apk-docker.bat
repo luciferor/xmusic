@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 echo 🚀 使用 Docker 构建 APK
@@ -7,6 +8,7 @@ REM 检查 Docker 是否运行
 docker info >nul 2>&1
 if errorlevel 1 (
     echo ❌ Docker 未运行，请先启动 Docker
+    pause
     exit /b 1
 )
 
@@ -15,6 +17,7 @@ echo 📦 构建 Docker 镜像...
 docker build -t flutter-builder:latest .
 if errorlevel 1 (
     echo ❌ Docker 镜像构建失败
+    pause
     exit /b 1
 )
 
@@ -28,10 +31,22 @@ if exist "android\upload-keystore.jks" if exist "android\key.properties" (
 
 REM 运行 Docker 容器并构建 APK
 echo 🔨 开始构建 APK...
-docker run --rm -v "%cd%:/app" -w /app flutter-builder:latest bash -c "set -e && echo '📥 安装依赖...' && flutter pub get && echo '🧹 清理构建缓存...' && flutter clean && rm -rf android/.gradle && rm -rf android/build && rm -rf android/app/build && echo '🔧 修复插件问题...' && PLUGIN_DIR=\"${HOME}/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/android\" && if [ -d \"$PLUGIN_DIR\" ]; then if [ -f \"$PLUGIN_DIR/build.gradle\" ]; then sed -i \"s/apply plugin: 'com.android.library'/apply plugin: 'com.android.library'\nandroid.namespace = 'io.github.tastelessjolt.flutterdynamicicon'/\" \"$PLUGIN_DIR/build.gradle\" && echo '✅ 修复 namespace'; fi && JAVA_FILE=\"$PLUGIN_DIR/src/main/java/io/github/tastelessjolt/flutterdynamicicon/FlutterDynamicIconPlugin.java\" && if [ -f \"$JAVA_FILE\" ]; then perl -i -0pe 's/public static void registerWith[^}]*\}//gs' \"$JAVA_FILE\" && echo '✅ 修复 v1 embedding'; fi; fi && echo '🏗️  构建 APK...' && flutter build apk --release --verbose && echo '📋 构建产物列表：' && find build -name '*.apk' -type f"
+echo.
+docker run --rm -v "%cd%:/app" -w /app flutter-builder:latest bash /app/docker-build-script.sh
 
 if errorlevel 1 (
+    echo.
+    echo ========================================
     echo ❌ APK 构建失败
+    echo ========================================
+    if exist "build.log" (
+        echo.
+        echo 查看完整日志: build.log
+        echo 最后 30 行错误日志:
+        echo ----------------------------------------
+        powershell -Command "Get-Content build.log -Tail 30"
+    )
+    pause
     exit /b 1
 )
 
@@ -43,6 +58,7 @@ if exist "%APK_PATH%" (
     for %%A in ("%APK_PATH%") do echo 📏 文件大小: %%~zA 字节
 ) else (
     echo ❌ APK 构建失败，未找到输出文件
+    pause
     exit /b 1
 )
 
