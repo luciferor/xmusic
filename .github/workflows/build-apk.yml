@@ -26,11 +26,20 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Setup Node.js for keystore generation
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
       - name: Setup signing config
         run: |
+          echo "=========================================="
+          echo "配置签名"
+          echo "=========================================="
+
           # Check if keystore secret exists
           if [ -n "${{ secrets.KEYSTORE_BASE64 }}" ]; then
-            echo "✅ Setting up release signing configuration"
+            echo "✅ 使用 GitHub Secrets 中的签名配置"
             
             # Create key.properties file from secrets
             cat > android/key.properties << EOF
@@ -42,12 +51,35 @@ jobs:
             
             # Decode and save keystore file
             echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/upload-keystore.jks
-            echo "✅ Release signing configured"
+            echo "✅ Release signing configured from secrets"
           else
             echo "⚠️ KEYSTORE_BASE64 secret not found"
-            echo "⚠️ Build will use debug signing (not suitable for production)"
-            echo "⚠️ See .github/SIGNING_SETUP.md for setup instructions"
+            echo "🔧 自动生成临时签名密钥（仅用于测试）"
+            
+            # Install node-forge
+            npm install node-forge
+            
+            # Generate keystore using gen_keystore.js
+            node gen_keystore.js
+            
+            # Move generated keystore to android folder
+            mv upload-keystore.p12 android/upload-keystore.jks
+            
+            # Create key.properties
+            cat > android/key.properties << EOF
+          storePassword=123456
+          keyPassword=123456
+          keyAlias=upload
+          storeFile=upload-keystore.jks
+          EOF
+            
+            echo "✅ 临时签名密钥已生成"
+            echo "⚠️ 注意：这是临时密钥，不适合生产环境"
           fi
+
+          echo ""
+          echo "📋 签名配置信息:"
+          cat android/key.properties | sed 's/Password=.*/Password=******/'
 
       - name: Fix flutter_dynamic_icon issues
         run: |
@@ -99,22 +131,36 @@ jobs:
           fi
 
           echo ""
+          echo "📋 检查 Gradle 配置:"
+          cat android/gradle.properties | grep -v "^#" | grep -v "^$"
+
+          echo ""
           echo "📋 Flutter doctor (简要):"
           flutter doctor
 
+      - name: Test Gradle build directly
+        run: |
+          echo "=========================================="
+          echo "测试 Gradle 直接构建"
+          echo "=========================================="
+          cd android
+          ./gradlew tasks --stacktrace || echo "⚠️ Gradle tasks 命令失败"
+          echo ""
+          echo "尝试清理 Gradle 缓存..."
+          ./gradlew clean --stacktrace || echo "⚠️ Gradle clean 命令失败"
+
       - name: Build APK with verbose output
         run: |
-          set -e
           echo "=========================================="
           echo "开始构建 APK"
           echo "=========================================="
           echo "当前目录: $(pwd)"
           echo "开始时间: $(date)"
 
-          # 执行构建 - 不使用 verbose 避免日志过大
+          # 执行构建 - 使用 verbose 查看详细错误
           echo ""
-          echo "🏗️  执行 flutter build apk --release"
-          flutter build apk --release 2>&1 | tee build.log
+          echo "🏗️  执行 flutter build apk --release --verbose"
+          flutter build apk --release --verbose 2>&1 | tee build.log
           BUILD_EXIT_CODE=${PIPESTATUS[0]}
 
           echo ""
@@ -138,7 +184,14 @@ jobs:
 
           if [ $BUILD_EXIT_CODE -ne 0 ]; then
             echo "❌ Build failed with exit code $BUILD_EXIT_CODE"
-            echo "Last 100 lines of output:"
+            echo ""
+            echo "🔍 搜索 Gradle 错误信息..."
+            grep -i "FAILURE\|error:\|exception\|failed" build.log | tail -n 50 || echo "未找到明显错误标记"
+            echo ""
+            echo "📋 Gradle 任务执行情况:"
+            grep "^>" build.log | tail -n 20 || echo "未找到任务信息"
+            echo ""
+            echo "📋 构建日志最后 100 行:"
             tail -n 100 build.log
             exit 1
           fi
@@ -201,6 +254,108 @@ jobs:
           echo "📋 完整 build 目录树:"
           find build -type f 2>/dev/null | head -n 50 || echo "build 目录为空"
 
+      - name: Extract APK information
+        if: success()
+        run: |
+          echo "=========================================="
+          echo "📱 APK 信息提取"
+          echo "=========================================="
+
+          APK_PATH=""
+          if [ -f "build/app/outputs/flutter-apk/app-release.apk" ]; then
+            APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
+          elif [ -f "build/app/outputs/apk/release/app-release.apk" ]; then
+            APK_PATH="build/app/outputs/apk/release/app-release.apk"
+          fi
+
+          if [ -n "$APK_PATH" ]; then
+            echo "APK 文件路径: $APK_PATH"
+            echo ""
+            
+            # 文件信息
+            echo "📦 文件信息:"
+            ls -lh "$APK_PATH"
+            FILE_SIZE=$(du -h "$APK_PATH" | cut -f1)
+            echo "文件大小: $FILE_SIZE"
+            
+            # 使用 aapt 提取 APK 信息
+            echo ""
+            echo "📋 应用信息:"
+            
+            # 提取包名
+            PACKAGE_NAME=$(aapt dump badging "$APK_PATH" | grep "package:" | sed "s/.*name='\([^']*\)'.*/\1/")
+            echo "Bundle ID (Package Name): $PACKAGE_NAME"
+            
+            # 提取版本信息
+            VERSION_CODE=$(aapt dump badging "$APK_PATH" | grep "versionCode=" | sed "s/.*versionCode='\([^']*\)'.*/\1/")
+            VERSION_NAME=$(aapt dump badging "$APK_PATH" | grep "versionName=" | sed "s/.*versionName='\([^']*\)'.*/\1/")
+            echo "Version Code: $VERSION_CODE"
+            echo "Version Name: $VERSION_NAME"
+            
+            # 提取应用名称
+            APP_LABEL=$(aapt dump badging "$APK_PATH" | grep "application-label:" | sed "s/.*application-label:'\([^']*\)'.*/\1/")
+            echo "应用名称: $APP_LABEL"
+            
+            # 提取 SDK 版本
+            MIN_SDK=$(aapt dump badging "$APK_PATH" | grep "sdkVersion:" | sed "s/.*sdkVersion:'\([^']*\)'.*/\1/")
+            TARGET_SDK=$(aapt dump badging "$APK_PATH" | grep "targetSdkVersion:" | sed "s/.*targetSdkVersion:'\([^']*\)'.*/\1/")
+            echo "Min SDK Version: $MIN_SDK"
+            echo "Target SDK Version: $TARGET_SDK"
+            
+            # 提取权限
+            echo ""
+            echo "📋 应用权限:"
+            aapt dump badging "$APK_PATH" | grep "uses-permission:" | sed "s/.*name='\([^']*\)'.*/  - \1/" | head -n 20
+            
+            # 提取签名信息
+            echo ""
+            echo "🔐 签名信息:"
+            jarsigner -verify -verbose -certs "$APK_PATH" 2>&1 | grep -A 3 "Signer #1:" || echo "无法提取签名信息"
+            
+            # 计算文件哈希
+            echo ""
+            echo "🔑 文件哈希:"
+            echo "MD5: $(md5sum "$APK_PATH" | cut -d' ' -f1)"
+            echo "SHA256: $(sha256sum "$APK_PATH" | cut -d' ' -f1)"
+            
+            # 保存信息到文件
+            cat > apk-info.txt << EOF
+          ========================================
+          APK 构建信息
+          ========================================
+
+          构建时间: $(date)
+          构建分支: ${{ github.ref_name }}
+          提交哈希: ${{ github.sha }}
+
+          文件信息:
+          - 路径: $APK_PATH
+          - 大小: $FILE_SIZE
+
+          应用信息:
+          - Bundle ID: $PACKAGE_NAME
+          - 版本号: $VERSION_NAME ($VERSION_CODE)
+          - 应用名称: $APP_LABEL
+          - Min SDK: $MIN_SDK
+          - Target SDK: $TARGET_SDK
+
+          文件哈希:
+          - MD5: $(md5sum "$APK_PATH" | cut -d' ' -f1)
+          - SHA256: $(sha256sum "$APK_PATH" | cut -d' ' -f1)
+
+          下载链接:
+          https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          ========================================
+          EOF
+            
+            echo ""
+            echo "✅ APK 信息已保存到 apk-info.txt"
+            cat apk-info.txt
+          else
+            echo "❌ 未找到 APK 文件"
+          fi
+
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
@@ -208,6 +363,14 @@ jobs:
           name: build-log
           path: build.log
           retention-days: 7
+
+      - name: Upload APK info
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-info
+          path: apk-info.txt
+          retention-days: 30
 
       - name: Upload APK
         if: success()
@@ -218,3 +381,36 @@ jobs:
             build/app/outputs/flutter-apk/app-release.apk
             build/app/outputs/apk/release/app-release.apk
             build/app/outputs/apk/release/*.apk
+          retention-days: 30
+
+      - name: Create Release Summary
+        if: success()
+        run: |
+          echo "## 🎉 APK 构建成功" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📱 应用信息" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          APK_PATH=""
+          if [ -f "build/app/outputs/flutter-apk/app-release.apk" ]; then
+            APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
+          elif [ -f "build/app/outputs/apk/release/app-release.apk" ]; then
+            APK_PATH="build/app/outputs/apk/release/app-release.apk"
+          fi
+
+          if [ -n "$APK_PATH" ]; then
+            PACKAGE_NAME=$(aapt dump badging "$APK_PATH" | grep "package:" | sed "s/.*name='\([^']*\)'.*/\1/")
+            VERSION_NAME=$(aapt dump badging "$APK_PATH" | grep "versionName=" | sed "s/.*versionName='\([^']*\)'.*/\1/")
+            FILE_SIZE=$(du -h "$APK_PATH" | cut -f1)
+            
+            echo "| 项目 | 值 |" >> $GITHUB_STEP_SUMMARY
+            echo "|------|-----|" >> $GITHUB_STEP_SUMMARY
+            echo "| **Bundle ID** | \`$PACKAGE_NAME\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **版本** | \`$VERSION_NAME\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **文件大小** | $FILE_SIZE |" >> $GITHUB_STEP_SUMMARY
+            echo "| **构建时间** | $(date) |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📥 下载" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "在 [Actions Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) 页面下载 APK 文件" >> $GITHUB_STEP_SUMMARY
+          fi
