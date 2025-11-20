@@ -1,0 +1,49 @@
+# Flutter 构建产物
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+
+# Android 构建产物
+android/.gradle/
+android/build/
+android/app/build/
+android/captures/
+android/local.properties
+android/.cxx/
+
+# iOS 构建产物
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/build/
+
+# 其他平台构建产物
+linux/flutter/
+macos/Flutter/
+windows/flutter/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# 临时文件
+*.log
+*.tmp
+.DS_Store
+
+# Node modules (如果有)
+node_modules/
+
+# 密钥文件（注意：构建时需要挂载）
+# android/upload-keystore.jks
+# android/key.properties
