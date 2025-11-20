@@ -1,0 +1,135 @@
+name: Build APK (Simplified)
+
+on:
+  push:
+    branches: [main, master, dev]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "17"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Setup signing (use debug signing)
+        run: |
+          echo "⚠️ 使用 debug 签名（适合测试）"
+          echo "如需 release 签名，请配置 GitHub Secrets"
+
+      - name: Fix flutter_dynamic_icon
+        run: |
+          PLUGIN_DIR="${HOME}/.pub-cache/hosted/pub.dev/flutter_dynamic_icon-2.1.0/android"
+          if [ -f "$PLUGIN_DIR/build.gradle" ]; then
+            sed -i "s/apply plugin: 'com.android.library'/apply plugin: 'com.android.library'\nandroid.namespace = 'io.github.tastelessjolt.flutterdynamicicon'/" "$PLUGIN_DIR/build.gradle"
+          fi
+          JAVA_FILE="$PLUGIN_DIR/src/main/java/io/github/tastelessjolt/flutterdynamicicon/FlutterDynamicIconPlugin.java"
+          if [ -f "$JAVA_FILE" ]; then
+            perl -i -0pe 's/public static void registerWith[^}]*\}//gs' "$JAVA_FILE"
+          fi
+
+      - name: Build APK
+        run: |
+          flutter clean
+          flutter build apk --debug
+
+          # 检查 APK
+          if [ -f "build/app/outputs/flutter-apk/app-debug.apk" ]; then
+            echo "✅ APK 构建成功"
+            ls -lh build/app/outputs/flutter-apk/app-debug.apk
+          else
+            echo "❌ APK 构建失败"
+            exit 1
+          fi
+
+      - name: Extract APK info
+        if: success()
+        run: |
+          APK_PATH="build/app/outputs/flutter-apk/app-debug.apk"
+
+          if [ -f "$APK_PATH" ]; then
+            echo "=========================================="
+            echo "📱 APK 信息"
+            echo "=========================================="
+            
+            FILE_SIZE=$(du -h "$APK_PATH" | cut -f1)
+            PACKAGE_NAME=$(aapt dump badging "$APK_PATH" | grep "package:" | sed "s/.*name='\([^']*\)'.*/\1/")
+            VERSION_NAME=$(aapt dump badging "$APK_PATH" | grep "versionName=" | sed "s/.*versionName='\([^']*\)'.*/\1/")
+            VERSION_CODE=$(aapt dump badging "$APK_PATH" | grep "versionCode=" | sed "s/.*versionCode='\([^']*\)'.*/\1/")
+            APP_LABEL=$(aapt dump badging "$APK_PATH" | grep "application-label:" | sed "s/.*application-label:'\([^']*\)'.*/\1/")
+            
+            echo "Bundle ID: $PACKAGE_NAME"
+            echo "版本: $VERSION_NAME ($VERSION_CODE)"
+            echo "应用名称: $APP_LABEL"
+            echo "文件大小: $FILE_SIZE"
+            echo "文件路径: $APK_PATH"
+            
+            # 保存信息
+            cat > apk-info.txt << 'EOFMARKER'
+          APK 构建信息
+          ==========================================
+          EOFMARKER
+            echo "Bundle ID: $PACKAGE_NAME" >> apk-info.txt
+            echo "版本: $VERSION_NAME ($VERSION_CODE)" >> apk-info.txt
+            echo "应用名称: $APP_LABEL" >> apk-info.txt
+            echo "文件大小: $FILE_SIZE" >> apk-info.txt
+            echo "文件路径: $APK_PATH" >> apk-info.txt
+            echo "构建时间: $(date)" >> apk-info.txt
+            echo "下载链接: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> apk-info.txt
+            echo "==========================================" >> apk-info.txt
+            
+            cat apk-info.txt
+          fi
+
+      - name: Upload APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 30
+
+      - name: Upload APK info
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-info
+          path: apk-info.txt
+          retention-days: 30
+
+      - name: Create Summary
+        if: success()
+        run: |
+          APK_PATH="build/app/outputs/flutter-apk/app-debug.apk"
+
+          if [ -f "$APK_PATH" ]; then
+            PACKAGE_NAME=$(aapt dump badging "$APK_PATH" | grep "package:" | sed "s/.*name='\([^']*\)'.*/\1/")
+            VERSION_NAME=$(aapt dump badging "$APK_PATH" | grep "versionName=" | sed "s/.*versionName='\([^']*\)'.*/\1/")
+            FILE_SIZE=$(du -h "$APK_PATH" | cut -f1)
+            
+            echo "## 🎉 APK 构建成功" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| 项目 | 值 |" >> $GITHUB_STEP_SUMMARY
+            echo "|------|-----|" >> $GITHUB_STEP_SUMMARY
+            echo "| **Bundle ID** | \`$PACKAGE_NAME\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **版本** | \`$VERSION_NAME\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **文件大小** | $FILE_SIZE |" >> $GITHUB_STEP_SUMMARY
+            echo "| **构建时间** | $(date) |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📥 下载" >> $GITHUB_STEP_SUMMARY
+            echo "在 [Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) 下载 APK" >> $GITHUB_STEP_SUMMARY
+          fi
