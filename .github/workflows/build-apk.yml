@@ -88,32 +88,19 @@ jobs:
 
           echo ""
           echo "📋 Java 版本:"
-          java -version
-
-          echo ""
-          echo "📋 Android SDK 路径:"
-          echo $ANDROID_SDK_ROOT
-
-          echo ""
-          echo "📋 检查 Android 配置:"
-          ls -la android/
-
-          echo ""
-          echo "📋 检查 build.gradle:"
-          cat android/app/build.gradle | grep -A 5 "buildTypes"
+          java -version 2>&1 | head -n 3
 
           echo ""
           echo "📋 检查签名配置:"
           if [ -f "android/key.properties" ]; then
             echo "✅ key.properties 存在"
-            cat android/key.properties | sed 's/Password=.*/Password=***/' 
           else
             echo "⚠️ key.properties 不存在，将使用 debug 签名"
           fi
 
           echo ""
-          echo "📋 Flutter doctor:"
-          flutter doctor -v
+          echo "📋 Flutter doctor (简要):"
+          flutter doctor
 
       - name: Build APK with verbose output
         run: |
@@ -124,10 +111,10 @@ jobs:
           echo "当前目录: $(pwd)"
           echo "开始时间: $(date)"
 
-          # 执行构建
+          # 执行构建 - 不使用 verbose 避免日志过大
           echo ""
-          echo "🏗️  执行 flutter build apk --release --verbose"
-          flutter build apk --release --verbose 2>&1 | tee build.log
+          echo "🏗️  执行 flutter build apk --release"
+          flutter build apk --release 2>&1 | tee build.log
           BUILD_EXIT_CODE=${PIPESTATUS[0]}
 
           echo ""
