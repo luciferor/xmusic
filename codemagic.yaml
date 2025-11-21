@@ -74,7 +74,7 @@ workflows:
 
           # 强制设置正确的 AGP 版本
           sed -i.bak 's/id("com.android.application") version "[^"]*"/id("com.android.application") version "8.9.1"/g' settings.gradle.kts
-          sed -i.bak 's/id("org.jetbrains.kotlin.android") version "[^"]*"/id("org.jetbrains.kotlin.android") version "2.1.0"/g' settings.gradle.kts
+          sed -i.bak 's/id("org.jetbrains.kotlin.android") version "[^"]*"/id("org.jetbrains.kotlin.android") version "1.9.24"/g' settings.gradle.kts
 
           # 强制设置正确的 Gradle wrapper 版本
           sed -i.bak 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.11.1-all.zip|g' gradle/wrapper/gradle-wrapper.properties
