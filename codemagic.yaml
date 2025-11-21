@@ -22,9 +22,12 @@ workflows:
         GRADLE_OPTS: "-Dorg.gradle.project.android.overrideVersionCheck=true"
         # 防止 Flutter 工具自动升级 Gradle
         FLUTTER_GRADLE_PLUGIN_APPLY_KOTLIN_VERSION: "false"
+        # 强制使用 Java 17
+        JAVA_HOME: /Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
       flutter: 3.24.5
       xcode: latest
       cocoapods: default
+      java: 17
     scripts:
       - name: Set up local.properties
         script: |
@@ -32,6 +35,12 @@ workflows:
       - name: Get Flutter packages
         script: |
           flutter packages pub get
+      - name: Verify Java Version
+        script: |
+          echo "=== Java Version Check ==="
+          java -version
+          echo "JAVA_HOME: $JAVA_HOME"
+          javac -version
       - name: Check Gradle Configuration
         script: |
           # 检查当前 Gradle 配置
@@ -41,6 +50,8 @@ workflows:
           cat gradle/wrapper/gradle-wrapper.properties | grep distributionUrl
           echo "Android Gradle Plugin version:"
           cat settings.gradle.kts | grep "com.android.application"
+          echo "Java compatibility in build.gradle:"
+          cat app/build.gradle | grep -A 2 "compileOptions"
       - name: Flutter analyze
         script: |
           flutter analyze
@@ -51,6 +62,13 @@ workflows:
         ignore_failure: true
       - name: Build APK with Flutter
         script: |
+          # 确保使用 Java 17
+          export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+          export PATH=$JAVA_HOME/bin:$PATH
+
+          echo "=== Final Java Version Check ==="
+          java -version
+
           # 在构建前，强制恢复正确的 Gradle 版本
           cd android
 
@@ -61,9 +79,16 @@ workflows:
           # 强制设置正确的 Gradle wrapper 版本
           sed -i.bak 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.11.1-all.zip|g' gradle/wrapper/gradle-wrapper.properties
 
+          # 确保 Java 版本设置为 17
+          sed -i.bak 's/JavaVersion.VERSION_[0-9]*/JavaVersion.VERSION_17/g' app/build.gradle
+          sed -i.bak 's/jvmTarget = "[0-9]*"/jvmTarget = "17"/g' app/build.gradle
+
           echo "=== Forced Gradle Configuration ==="
           cat settings.gradle.kts | grep "com.android.application"
           cat gradle/wrapper/gradle-wrapper.properties | grep distributionUrl
+          echo "=== Java Version in build.gradle ==="
+          cat app/build.gradle | grep -A 2 "compileOptions"
+          cat app/build.gradle | grep "jvmTarget"
 
           cd ..
 
