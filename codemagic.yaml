@@ -55,11 +55,11 @@ workflows:
           cd android
 
           # 强制设置正确的 AGP 版本
-          sed -i.bak 's/id("com.android.application") version "[^"]*"/id("com.android.application") version "8.7.2"/g' settings.gradle.kts
-          sed -i.bak 's/id("org.jetbrains.kotlin.android") version "[^"]*"/id("org.jetbrains.kotlin.android") version "2.0.21"/g' settings.gradle.kts
+          sed -i.bak 's/id("com.android.application") version "[^"]*"/id("com.android.application") version "8.9.1"/g' settings.gradle.kts
+          sed -i.bak 's/id("org.jetbrains.kotlin.android") version "[^"]*"/id("org.jetbrains.kotlin.android") version "2.1.0"/g' settings.gradle.kts
 
           # 强制设置正确的 Gradle wrapper 版本
-          sed -i.bak 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.9-all.zip|g' gradle/wrapper/gradle-wrapper.properties
+          sed -i.bak 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.11.1-all.zip|g' gradle/wrapper/gradle-wrapper.properties
 
           echo "=== Forced Gradle Configuration ==="
           cat settings.gradle.kts | grep "com.android.application"
